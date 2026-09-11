@@ -5,14 +5,30 @@ test.describe("PUT method", () => {
 
     test("Update data on the booking ID", async ({ request, authToken }) => {
 
-        const response = await request.put("/booking/5", {
-
+        // Create booking
+        const createResponse = await request.post("/booking", {
             headers: {
                 Cookie: `token=${authToken}`
             },
-
             data: bookingData
         });
+
+        expect(createResponse.status()).toBe(200);
+
+        const createBody = await createResponse.json();
+        const bookingId = createBody.bookingid;
+
+        console.log("Created Booking ID:", bookingId);
+
+        // Update booking
+        const response = await request.put(`/booking/${bookingId}`, {
+            headers: {
+                Cookie: `token=${authToken}`
+            },
+            data: bookingData
+        });
+
+        console.log("PUT Status:", response.status());
 
         expect(response.status()).toBe(200);
 
@@ -20,7 +36,6 @@ test.describe("PUT method", () => {
 
         console.log("Updated Booking:", body);
 
-        // Validate updated response
         expect(body.firstname).toBe(bookingData.firstname);
         expect(body.lastname).toBe(bookingData.lastname);
         expect(body.totalprice).toBe(bookingData.totalprice);
@@ -35,5 +50,4 @@ test.describe("PUT method", () => {
         expect(body.additionalneeds)
             .toBe(bookingData.additionalneeds);
     });
-
 });
