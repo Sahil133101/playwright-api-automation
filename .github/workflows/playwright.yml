@@ -12,8 +12,8 @@ jobs:
 
     env:
       BASE_URL: ${{ secrets.BASE_URL }}
-      API_USERNAME: ${{ secrets.USERNAME }}
-      API_PASSWORD: ${{ secrets.PASSWORD }}
+      API_USERNAME: ${{ secrets.API_USERNAME }}
+      API_PASSWORD: ${{ secrets.API_PASSWORD }}
 
     steps:
       - name: Checkout code
@@ -29,6 +29,12 @@ jobs:
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
+
+      - name: Check environment variables
+        run: |
+          echo "BASE_URL is set: ${{ secrets.BASE_URL != '' }}"
+          echo "API_USERNAME is set: ${{ secrets.API_USERNAME != '' }}"
+          echo "API_PASSWORD is set: ${{ secrets.API_PASSWORD != '' }}"
 
       - name: Run Playwright tests
         run: npx playwright test

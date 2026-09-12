@@ -1,13 +1,16 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
 import dotenv from "dotenv";
 
 dotenv.config({ override: true });
 
 test("Create auth token", async ({ request }) => {
 
-    console.log("BASE_URL:", process.env.API_BASE_URL);
-    console.log("USERNAME:", process.env.API_USERNAME);
-    console.log("PASSWORD:", process.env.API_PASSWORD);
+    console.log("BASE_URL:", process.env.BASE_URL);
+    console.log("API_USERNAME:", process.env.API_USERNAME);
+    console.log(
+        "API_PASSWORD:",
+        process.env.API_PASSWORD ? "set" : "undefined"
+    );
 
     const response = await request.post(
         `${process.env.BASE_URL}/auth`,
@@ -23,4 +26,7 @@ test("Create auth token", async ({ request }) => {
 
     console.log("Status:", response.status());
     console.log("Response:", body);
+
+    test.expect(response.status()).toBe(200);
+    test.expect(body.token).toBeTruthy();
 });
