@@ -4,7 +4,7 @@ test.describe("DELETE method", () => {
 
     test("Delete booking", async ({ request, authToken }) => {
 
-        const response = await request.delete("/booking/5", {
+        const response = await request.delete("/booking/10", {
 
             headers: {
                 Cookie: `token=${authToken}`

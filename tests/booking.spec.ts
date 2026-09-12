@@ -21,7 +21,7 @@ test.describe("Get method of API testing", () => {
 
     test("particulr product", async({request,authToken})=>{
 
-      const  response = await request.get("/booking/5",{
+      const  response = await request.get("/booking/10",{
         headers : {
           Cookies : `token=${authToken}`
 
