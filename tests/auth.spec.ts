@@ -1,4 +1,4 @@
-import { test } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import dotenv from "dotenv";
 
 dotenv.config({ override: true });
@@ -27,6 +27,6 @@ test("Create auth token", async ({ request }) => {
     console.log("Status:", response.status());
     console.log("Response:", body);
 
-    test.expect(response.status()).toBe(200);
-    test.expect(body.token).toBeTruthy();
+    expect(response.status()).toBe(200);
+    expect(body.token).toBeTruthy();
 });
